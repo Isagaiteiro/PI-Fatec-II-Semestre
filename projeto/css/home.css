@@ -1,0 +1,15 @@
+.min-height {
+    min-height: 99vh;
+}
+
+.title {
+    font-size: 3.5rem;
+}
+
+.text-decoration-none{
+    text-decoration: none;
+}
+
+.text-decoration-none:hover{
+    text-decoration: none;
+}

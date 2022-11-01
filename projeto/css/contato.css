@@ -1,0 +1,15 @@
+.title {
+    font-size: 5rem;
+}
+
+.not-decoration {
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.not-decoration:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(78, 78, 78);
+}
