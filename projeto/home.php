@@ -1,19 +1,27 @@
 <?php
     require_once('entidade/Usuario.php');
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){ // se o método chamado for tipo Post
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
         $usuario = new Usuario();
         $result = $usuario->getUsuario($_POST['email']); 
         $row = $result->fetch_assoc();
         if(isset($row['email']) && isset($row['senha'])){             
-            if($_POST['email'] == $row['email'] and $_POST['senha'] == $row['senha']){ // se o usuario e senha for valido
-                session_start(); // inicializa session 
-                $_SESSION['loggedin'] = TRUE; // seta no session loggedin verdadeiro
-                $_SESSION["usuario"] = $row["nome"];  // seta no session usuario Witer
-                header("location: inicio.php"); // redireciona para inicio
+            if($_POST['senha'] == $row['senha']){ 
+                session_start(); 
+                $_SESSION['loggedin'] = TRUE; 
+                $_SESSION["usuario"] = $row["nome"];
+                $_SESSION["email"] = $row["email"];  
+                header("location: inicio.php"); 
             } else {
-                $_SESSION['loggedin'] = FALSE; // se não seta no session loggedin falso
+                $_SESSION['loggedin'] = FALSE; 
             }
+        } else{
+            echo '<div class="alert alert-danger fixed-top alert-dismissible fade show" role="alert">
+                    Usuário ou senha inválida.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>';
         }
     }
 ?>

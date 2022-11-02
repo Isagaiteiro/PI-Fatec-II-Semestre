@@ -5,7 +5,14 @@
         header("location: home.php");
         exit;
     }
+
+    require_once('entidade/Usuario.php');
+
+    $usuario = new Usuario();
+    $result = $usuario->getUsuario(htmlspecialchars($_SESSION["email"])); 
+    $row = $result->fetch_assoc();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,17 +38,16 @@
         <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto d-flex align-items-center">
                 <li class="nav-item active">
-                    <img src="image/usuario.jpg" alt="Imagem do user" width="50px"
+                    <?php if(isset($row['foto']) && $row['foto'] != null):?>
+                        <img src="<?php echo $row['foto']?>" alt="Imagem do user" width="50px"
+                            height="50px" class="img-fluid rounded-circle">
+                    <?php else: ?>
+                        <img src="image/usuario.jpg" alt="Imagem do user" width="50px"
                         height="50px" class="img-fluid rounded-circle">
+                    <?php endif; ?>
                 </li>
                 <li class="nav-item pl-3">
-                    <p class="m-0 font-weight-bold text-white fs-16">Witer Mendonça</p>
-                </li>
-
-                <li class="nav-item pl-3">
-                    <a [routerLink]="[ '/usuario-edit', id]">
-                        <p class="text-white fs-16 m-0"><i class="fa fa-pencil-square-o " aria-hidden="true"></i></p>
-                    </a>
+                    <p class="m-0 font-weight-bold text-white fs-16"><?php echo htmlspecialchars($_SESSION["usuario"]); ?></p>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto d-flex align-items-center">
@@ -88,7 +94,7 @@
                     data-toggle="tab" href="#todasPostagens" role="tab" aria-controls="nav-todasPostagens"
                     aria-selected="true">Todas as Postagens</a>
 
-                <a (click)='findByIdUsuario()' class="nav-item nav-link text-secondary font-weight-bold"
+                <a class="nav-item nav-link text-secondary font-weight-bold"
                     id="nav-minhasPostagens-tab" data-toggle="tab" href="#minhasPostagens" role="tab"
                     aria-controls="nav-minhasPostagens" aria-selected="false">Minhas
                     Postagens</a>
@@ -103,7 +109,7 @@
             </div>
         </nav>
 
-        <!-- <h2 *ngIf='listaPostagem.length == 0' class="text-center text-secondary mt-5">
+        <!-- <h2 class="text-center text-secondary mt-5">
             Não existem postagens ainda...
         </h2>-->
 
@@ -217,7 +223,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="titulo">Título</label>
-                        <input [(ngModel)]='postagem.titulo' type="text" class="form-control" id="titulo"
+                        <input type="text" class="form-control" id="titulo"
                             placeholder="Digite o título">
                     </div>
 
@@ -235,7 +241,7 @@
 
                     <div class="form-group">
                         <label for="texto">Texto</label>
-                        <textarea [(ngModel)]='postagem.texto' class="form-control" name="texto" id="texto"
+                        <textarea class="form-control" name="texto" id="texto"
                             rows="3"></textarea>
                     </div>
                   
@@ -253,7 +259,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success" (click)='publicar()'
+                    <button type="button" class="btn btn-success"
                         data-dismiss="modal">Publicar</button>
                 </div>
             </div>

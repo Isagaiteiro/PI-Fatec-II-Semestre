@@ -38,7 +38,7 @@ INSERT INTO `tipo` (`idtipo`, `tipo`) VALUES
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(80) NOT NULL,
-  `email` varchar(50) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
   `foto` varchar(250) DEFAULT NULL,
   `senha` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)

@@ -2,7 +2,6 @@
     if($_SERVER["REQUEST_METHOD"] == "POST"){ 
         if(isset($_POST['nome']) && $_POST['nome'] != "" 
             && isset($_POST['email']) && $_POST['email'] != ""
-            && isset($_POST['foto']) && $_POST['foto'] != ""
             && isset($_POST['senha']) && $_POST['senha'] != ""
             && isset($_POST['confirmSenha']) && $_POST['confirmSenha'] != ""){
             if($_POST['senha'] == $_POST['confirmSenha']){
@@ -82,7 +81,7 @@
                             <div class="form-group">
                                 <label for="foto">Link da Foto</label>
                                 <input class="form-control" type="text" name="foto" id="foto"
-                                    placeholder="Link da sua foto" required>
+                                    placeholder="Link da sua foto">
                             </div>
 
                             <div class="form-group">
