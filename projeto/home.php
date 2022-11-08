@@ -85,7 +85,7 @@
                 </div>
 
             </div>
-            <img class="col-md-6" src="image/educacao.png" alt="">
+            <img class="col-md-6" src="./image/ideia.png" alt="" height="800px">
         </div>
     </div>
 
