@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
-                <img class="img-fluid" src="image/educacao.png" alt="">
+                <img class="img-fluid" src="./image/educacao.png" alt="" >
             </div>
         </div>
     </div>
