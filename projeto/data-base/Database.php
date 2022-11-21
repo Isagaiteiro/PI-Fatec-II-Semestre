@@ -5,7 +5,7 @@ class Database{
   const SERVERNAME = '127.0.0.1';
   const DBNAME = 'swe';
   const USERNAME = 'root';
-  const PASS = 'root';
+  const PASS = '';
 
   private $table;
 
@@ -46,5 +46,25 @@ class Database{
     $result = $this->connection->query($query);
     $this->connection->close();
     return $result;
+  }
+
+  public function update($where,$values){
+    $s = implode(', ', array_map(
+                          function($k, $v) {
+                              return $k . ' = ' . $v;
+                          },
+                          array_keys($values),
+                          array_values($values)
+                        )
+                      );
+    $query = 'UPDATE '.$this->table.' SET '. $s .' WHERE '. $where;
+    
+    echo $query;
+    if ($this->connection->query($query) === TRUE) {
+      return true;
+    } else {
+      return false;
+    }
+    $this->connection->close();
   }
 }

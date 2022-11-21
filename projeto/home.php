@@ -26,7 +26,7 @@
     }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -85,7 +85,7 @@
                 </div>
 
             </div>
-            <img class="col-md-6" src="./image/ideia.png" alt="" height="800px">
+            <img class="col-md-6 img-fluid" src="./image/ideia.png" alt="" >
         </div>
     </div>
 

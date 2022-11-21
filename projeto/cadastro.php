@@ -62,7 +62,7 @@
     <div class="container-fluid">
 
         <div class="row d-flex align-items-center min-height">
-            <img class="col-md-6" src="image/educacao.png" alt="">
+            <img class="col-md-6" src="./image/cadastro.png" alt="">
             <div class="col-md-6 mt-5 mb-5">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-10">

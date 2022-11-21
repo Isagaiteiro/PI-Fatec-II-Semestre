@@ -1,16 +1,28 @@
 <?php
-    session_start(); // initial session
+session_start();
 
-    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){ // se não existir loggedin no session ou loggedin não estuver valido volta para index.php
-        header("location: home.php");
-        exit;
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: home.php");
+    exit;
+}
+
+require_once('entidade/Usuario.php');
+
+$usuario = new Usuario();
+$result = $usuario->getUsuario(htmlspecialchars($_SESSION["email"]));
+$row = $result->fetch_assoc();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (
+        isset($_POST['$tema']) && $_POST['tema'] != ""
+        && isset($_POST['url']) && $_POST['url'] != ""
+        && isset($_POST['conteudo']) && $_POST['conteudo'] != ""
+    ) {
+
+        require_once('entidade/Postagem.php');
+
     }
-
-    require_once('entidade/Usuario.php');
-
-    $usuario = new Usuario();
-    $result = $usuario->getUsuario(htmlspecialchars($_SESSION["email"])); 
-    $row = $result->fetch_assoc();
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,53 +32,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="css/inicio.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <title>SWE-INICIO</title>
 </head>
 
 <body>
     <!--Navibar-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top nav-height">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
-            aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top nav-height">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto d-flex align-items-center">
                 <li class="nav-item active">
-                    <?php if(isset($row['foto']) && $row['foto'] != null):?>
-                        <img src="<?php echo $row['foto']?>" alt="Imagem do user" width="50px"
-                            height="50px" class="img-fluid rounded-circle">
-                    <?php else: ?>
-                        <img src="image/usuario.jpg" alt="Imagem do user" width="50px"
-                        height="50px" class="img-fluid rounded-circle">
+                    <?php if (isset($row['foto']) && $row['foto'] != null) : ?>
+                        <img src="<?php echo $row['foto'] ?>" alt="Imagem do user" width="50px" height="50px" class="img-fluid rounded-circle">
+                    <?php else : ?>
+                        <img src="image/usuario.jpg" alt="Imagem do user" width="50px" height="50px" class="img-fluid rounded-circle">
                     <?php endif; ?>
                 </li>
-                <li class="nav-item pl-3">
-                    <p class="m-0 font-weight-bold text-white fs-16"><?php echo htmlspecialchars($_SESSION["usuario"]); ?></p>
+                <li class="nav-item dropdown pl-3">
+                    <a class="nav-link dropdown-toggle font-weight-bold text-dark fs-16 p-0 pr-1
+                     pl-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php echo htmlspecialchars($_SESSION["usuario"]); ?>
+                    </a>
+                    <div class="dropdown-menu ml-3" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Editar/Excluir Usuário</a>
+                    </div>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto d-flex align-items-center">
                 <li class="nav-item pl-3">
-                    <button type="button" class="btn btn-outline-dark ">
-                        <a href="logout.php" class="m-0 font-weight-bold text-white fs-16">Sair</a>
-                    </button>
-
+                    <a href="logout.php" class="m-0 font-weight-bold text-white fs-16">
+                        <button type="button" class="btn btn-danger ">
+                            Sair <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </a>
                 </li>
             </ul>
         </div>
     </nav>
 
-     <!--Header-->
+    <!--Header-->
     <div class="container-fluid">
-        <div class="row bg-secondary d-flex align-items-center header-height">
+        <div class="row bg-light d-flex align-items-center header-height">
             <div class="col-md-6">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-md-12 text-center text-white">
+                    <div class="col-md-12 text-center text-dark">
                         <h1 class="fs-54">Seja bem vindo(a)!</h1>
                         <h5 class="fs-18">Compartilhe aqui os suas fontes de estudo e contribua com o crescimento de
                             todos!</h5>
@@ -74,37 +90,30 @@
                 </div>
                 <div class="row d-flex justify-content-center mt-3 mb-3">
                     <div class="">
-                        <button class="btn btn-light justify-content-center" data-toggle="modal"
-                            data-target="#novaPostagem">Nova
+                        <button class="btn btn-success justify-content-center" data-toggle="modal" data-target="#novaPostagem">Nova
                             Postagem</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
-                <img class="img-fluid" src="./image/educacao.png" alt="" >
+                <img class="img-fluid" src="image/educacao.png" alt="">
             </div>
         </div>
     </div>
 
-     <!--Postagens-->
+    <!--Postagens-->
     <div class="container mb-5 mt-5" id="postagens">
         <nav>
             <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active text-secondary font-weight-bold" id="nav-todasPostagens-tab"
-                    data-toggle="tab" href="#todasPostagens" role="tab" aria-controls="nav-todasPostagens"
-                    aria-selected="true">Todas as Postagens</a>
+                <a class="nav-item nav-link active text-secondary font-weight-bold" id="nav-todasPostagens-tab" data-toggle="tab" href="#todasPostagens" role="tab" aria-controls="nav-todasPostagens" aria-selected="true">Todas as Postagens</a>
 
-                <a class="nav-item nav-link text-secondary font-weight-bold"
-                    id="nav-minhasPostagens-tab" data-toggle="tab" href="#minhasPostagens" role="tab"
-                    aria-controls="nav-minhasPostagens" aria-selected="false">Minhas
+                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-minhasPostagens-tab" data-toggle="tab" href="#minhasPostagens" role="tab" aria-controls="nav-minhasPostagens" aria-selected="false">Minhas
                     Postagens</a>
 
-                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTema-tab" data-toggle="tab"
-                    href="#postagemTema" role="tab" aria-controls="nav-postagemTema" aria-selected="false">Postagens por
+                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTema-tab" data-toggle="tab" href="#postagemTema" role="tab" aria-controls="nav-postagemTema" aria-selected="false">Postagens por
                     tema</a>
 
-                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTipo-tab" data-toggle="tab"
-                    href="#postagemTipo" role="tab" aria-controls="nav-postagemTipo" aria-selected="false">Postagens por
+                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTipo-tab" data-toggle="tab" href="#postagemTipo" role="tab" aria-controls="nav-postagemTipo" aria-selected="false">Postagens por
                     tipo</a>
             </div>
         </nav>
@@ -114,8 +123,7 @@
         </h2>-->
 
         <div class="tab-content mt-5" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel"
-                aria-labelledby="nav-todasPostagens-tab">
+            <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel" aria-labelledby="nav-todasPostagens-tab">
 
                 <div class="card">
                     <div class="card text-center">
@@ -157,8 +165,7 @@
                 <div class="row d-flex justify-content-center mt-5 mb-5">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="titulo"
-                                placeholder="Digite um tema para pesquisar">
+                            <input type="text" class="form-control" id="titulo" placeholder="Digite um tema para pesquisar">
                         </div>
                     </div>
                 </div>
@@ -184,8 +191,7 @@
                 <div class="row d-flex justify-content-center mt-5 mb-5">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="titulo"
-                                placeholder="Digite um tipo para pesquisar">
+                            <input type="text" class="form-control" id="titulo" placeholder="Digite um tipo para pesquisar">
                         </div>
                     </div>
                 </div>
@@ -210,8 +216,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="novaPostagem" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
-        aria-hidden="true">
+    <div class="modal fade" id="novaPostagem" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -220,48 +225,47 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="titulo">Título</label>
-                        <input type="text" class="form-control" id="titulo"
-                            placeholder="Digite o título">
-                    </div>
+                <form <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="post">
+                    <div class="modal-body">
 
-                    <div class="form-group">
-                        <label for="titulo">Link</label>
-                        <input type="text" class="form-control" id="link"
-                            placeholder="Digite o link">
-                    </div>
+                        <div class="form-group">
+                            <label for="titulo">Título</label>
+                            <input type="text" class="form-control" id="titulo" placeholder="Digite o título">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="titulo">Tema</label>
-                        <input type="text" class="form-control" id="tema"
-                            placeholder="Digite o tema">
-                    </div>
+                        <div class="form-group">
+                            <label for="titulo">Link</label>
+                            <input type="text" class="form-control" id="link" placeholder="Digite o link">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="texto">Texto</label>
-                        <textarea class="form-control" name="texto" id="texto"
-                            rows="3"></textarea>
-                    </div>
-                  
-                    <div class="form-group">
-                        <label for="texto">Escolha o tipo:</label>
-                        <select name="tipo" id="tipo" class="form-control">
-                            <option>Vídeo</option>
-                            <option>Curso on-line</option>
-                            <option>Livro</option>
-                            <option>Artigo</option>
-                            <option>Site</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="titulo">Tema</label>
+                            <input type="text" class="form-control" id="tema" placeholder="Digite o tema">
+                        </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success"
-                        data-dismiss="modal">Publicar</button>
-                </div>
+                        <div class="form-group">
+                            <label for="texto">Texto</label>
+                            <textarea class="form-control" name="texto" id="texto" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="texto">Escolha o tipo:</label>
+                            <select name="tipo" id="tipo" class="form-control">
+                                <option>Video</option>
+                                <option>Curso on-line</option>
+                                <option>Livro</option>
+                                <option>Artigo</option>
+                                <option>Site</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-dismiss="modal">Publicar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -279,15 +283,9 @@
 
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 
 </html>
