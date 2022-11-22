@@ -131,7 +131,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
   # Agradecimento 
 
 # :closed_book: Professores
-- Jonas Bodê -  Engenharia de Software <br/>
+- Jonas Bodê -  Engenharia de Software II <br/>
 - Nilton Sacco - Banco de Dados Relacional <br/>
 - Orlando Saraiva - Desenvolvimento Web II <br/>
 
