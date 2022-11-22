@@ -7,7 +7,7 @@ Projeto interdisciplinar
 > <b>SWE</b> <br> Share Way Education
 
 <div align="center">
-  <sub><strong>Equipe de desenvolvedores: </strong> 
+  <sub><strong>Equipe de desenvolvedores: </strong> <br>
     <a href="https://github.com/danielfransa">Daniel França</a> |
     <a href="https://github.com/douglashugo">Douglas Hugo</a> |
     <a href="https://github.com/Guiiwillian">Guilherme William de Paula</a> |
