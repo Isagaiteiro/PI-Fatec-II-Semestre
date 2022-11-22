@@ -50,7 +50,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
         </sub>
        </a>
        <br />
-       <a href="" title="Linkedin">@</a> 
+       <a href="https://www.linkedin.com/in/danielfransa/" title="Linkedin">@danielfransa</a> 
        <br />
     </td> 
     <td align="center">
@@ -62,7 +62,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
         </sub>
        </a>
        <br />
-       <a href="" title="Linkedin">@</a>
+       <a href="https://www.linkedin.com/in/douglas-hugo-789358111/" title="Linkedin">@douglashugo</a>
        <br />
     </td>
      <td align="center">
@@ -74,7 +74,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
         </sub>
        </a>
        <br />
-       <a href="" title="Linkedin">@</a>
+       <a href="https://www.linkedin.com/in/guilherme-willian-de-paula-3421b1118/" title="Linkedin">@guilhermedepaula</a>
        <br />
     </td>
      <td align="center">
@@ -110,7 +110,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
         </sub>
        </a>
        <br />
-       <a href="" title="Linkedin">@</a>
+       <a href="https://www.linkedin.com/in/valdelaine-cristina-ribeiro/" title="Linkedin">@valdelaineribeiro</a>
        <br />
     </td>
      <td align="center">
@@ -122,7 +122,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
         </sub>
        </a>
        <br />
-       <a href="" title="Linkedin">@</a>
+       <a href="https://www.linkedin.com/in/witermendonca/" title="Linkedin">@witermendonca</a>
        <br />
     </td>
   </tr>
