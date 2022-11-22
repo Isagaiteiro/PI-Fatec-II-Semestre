@@ -103,7 +103,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
     </td>
     <td align="center">
       <a href="https://github.com/Valdelainecristinaribeiro">
-        <img src="https://avatars.githubusercontent.com/u/101229879?v=4" width="100px;" alt="Valdelaine"/>
+        <img src="https://avatars.githubusercontent.com/u/101229879?s=400&u=8245d63629334397db8422a06b4c9edbe97c838a&v=4" width="100px;" alt="Valdelaine"/>
         <br />
         <sub>
           <b>Valdelaine</b>
