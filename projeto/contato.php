@@ -20,7 +20,7 @@
         <div class="container">
             <a class="navbar  font-weight-bold not-decoration" href="home.php">Home</a>
 
-            <a class="navbar-nav text-center ml-auto font-weight-bold not-decoration" href="sobre-nos.html">Sobre</a>
+            <a class="navbar-nav text-center ml-auto font-weight-bold not-decoration" href="sobre-nos.php">Sobre</a>
         </div>
     </nav>
 

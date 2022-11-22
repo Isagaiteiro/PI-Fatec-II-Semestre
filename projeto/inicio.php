@@ -35,7 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="css/inicio.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <title>SWE-INICIO</title>
 </head>
@@ -43,25 +44,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!--Navibar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top nav-height">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+            aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto d-flex align-items-center">
                 <li class="nav-item active">
-                    <?php if (isset($row['foto']) && $row['foto'] != null) : ?>
-                        <img src="<?php echo $row['foto'] ?>" alt="Imagem do user" width="50px" height="50px" class="img-fluid rounded-circle">
-                    <?php else : ?>
-                        <img src="image/usuario.jpg" alt="Imagem do user" width="50px" height="50px" class="img-fluid rounded-circle">
+                    <?php if (isset($row['foto']) && $row['foto'] != null): ?>
+                    <img src="<?php echo $row['foto'] ?>" alt="Imagem do user" width="50px" height="50px"
+                        class="img-fluid rounded-circle">
+                    <?php else: ?>
+                    <img src="image/usuario.jpg" alt="Imagem do user" width="50px" height="50px"
+                        class="img-fluid rounded-circle">
                     <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown pl-3">
                     <a class="nav-link dropdown-toggle font-weight-bold text-dark fs-16 p-0 pr-1
-                     pl-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     pl-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
                         <?php echo htmlspecialchars($_SESSION["usuario"]); ?>
                     </a>
                     <div class="dropdown-menu ml-3" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Editar/Excluir Usuário</a>
+                        <a class="dropdown-item" href="./edite-usuario.php">Editar/Excluir Usuário</a>
                     </div>
                 </li>
             </ul>
@@ -90,7 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="row d-flex justify-content-center mt-3 mb-3">
                     <div class="">
-                        <button class="btn btn-success justify-content-center" data-toggle="modal" data-target="#novaPostagem">Nova
+                        <button class="btn btn-success justify-content-center" data-toggle="modal"
+                            data-target="#novaPostagem">Nova
                             Postagem</button>
                     </div>
                 </div>
@@ -105,15 +111,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mb-5 mt-5" id="postagens">
         <nav>
             <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active text-secondary font-weight-bold" id="nav-todasPostagens-tab" data-toggle="tab" href="#todasPostagens" role="tab" aria-controls="nav-todasPostagens" aria-selected="true">Todas as Postagens</a>
+                <a class="nav-item nav-link active text-secondary font-weight-bold" id="nav-todasPostagens-tab"
+                    data-toggle="tab" href="#todasPostagens" role="tab" aria-controls="nav-todasPostagens"
+                    aria-selected="true">Todas as Postagens</a>
 
-                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-minhasPostagens-tab" data-toggle="tab" href="#minhasPostagens" role="tab" aria-controls="nav-minhasPostagens" aria-selected="false">Minhas
+                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-minhasPostagens-tab"
+                    data-toggle="tab" href="#minhasPostagens" role="tab" aria-controls="nav-minhasPostagens"
+                    aria-selected="false">Minhas
                     Postagens</a>
 
-                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTema-tab" data-toggle="tab" href="#postagemTema" role="tab" aria-controls="nav-postagemTema" aria-selected="false">Postagens por
+                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTema-tab" data-toggle="tab"
+                    href="#postagemTema" role="tab" aria-controls="nav-postagemTema" aria-selected="false">Postagens por
                     tema</a>
 
-                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTipo-tab" data-toggle="tab" href="#postagemTipo" role="tab" aria-controls="nav-postagemTipo" aria-selected="false">Postagens por
+                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTipo-tab" data-toggle="tab"
+                    href="#postagemTipo" role="tab" aria-controls="nav-postagemTipo" aria-selected="false">Postagens por
                     tipo</a>
             </div>
         </nav>
@@ -123,7 +135,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </h2>-->
 
         <div class="tab-content mt-5" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel" aria-labelledby="nav-todasPostagens-tab">
+            <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel"
+                aria-labelledby="nav-todasPostagens-tab">
 
                 <div class="card">
                     <div class="card text-center">
@@ -165,7 +178,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="row d-flex justify-content-center mt-5 mb-5">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="titulo" placeholder="Digite um tema para pesquisar">
+                            <input type="text" class="form-control" id="titulo"
+                                placeholder="Digite um tema para pesquisar">
                         </div>
                     </div>
                 </div>
@@ -191,7 +205,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="row d-flex justify-content-center mt-5 mb-5">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="titulo" placeholder="Digite um tipo para pesquisar">
+                            <input type="text" class="form-control" id="titulo"
+                                placeholder="Digite um tipo para pesquisar">
                         </div>
                     </div>
                 </div>
@@ -216,7 +231,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="novaPostagem" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal fade" id="novaPostagem" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -283,9 +299,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+        </script>
 </body>
 
 </html>
