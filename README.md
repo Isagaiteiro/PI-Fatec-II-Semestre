@@ -43,7 +43,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
   <tr>
     <td align="center">
       <a href="https://github.com/danielfransa">
-        <img src="" width="100px;" alt="Daniel"/>
+        <img src="https://avatars.githubusercontent.com/u/102123924?v=4" width="100px;" alt="Daniel"/>
         <br />
         <sub>
           <b>Daniel</b>
@@ -55,7 +55,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
     </td> 
     <td align="center">
       <a href="https://github.com/douglashugo">
-        <img src="" width="100px;" alt="Douglas"/>
+        <img src="https://avatars.githubusercontent.com/u/95046698?v=4" width="100px;" alt="Douglas"/>
         <br />
         <sub>
           <b>Doulas</b>
@@ -67,7 +67,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
     </td>
      <td align="center">
       <a href="https://github.com/Guiiwillian">
-        <img src="" width="100px;" alt="Guilherme"/>
+        <img src="https://avatars.githubusercontent.com/u/102560517?v=4" width="100px;" alt="Guilherme"/>
         <br />
         <sub>
           <b>Guilherme</b>
@@ -91,7 +91,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
     </td>
     <td align="center">
       <a href="https://github.com/reginhoferreira">
-        <img src="" width="100px;" alt="Régis"/>
+        <img src="https://avatars.githubusercontent.com/u/93953743?v=4" width="100px;" alt="Régis"/>
         <br />
         <sub>
           <b>Régis</b>
@@ -103,7 +103,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
     </td>
     <td align="center">
       <a href="https://github.com/Valdelainecristinaribeiro">
-        <img src="" width="100px;" alt="Valdelaine"/>
+        <img src="https://avatars.githubusercontent.com/u/101229879?v=4" width="100px;" alt="Valdelaine"/>
         <br />
         <sub>
           <b>Valdelaine</b>
@@ -115,7 +115,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
     </td>
      <td align="center">
       <a href="https://github.com/witermendonca">
-        <img src="" width="100px;" alt="Witer"/>
+        <img src="https://avatars.githubusercontent.com/u/73801483?v=4" width="100px;" alt="Witer"/>
         <br />
         <sub>
           <b>Witer</b>
