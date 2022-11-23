@@ -11,11 +11,11 @@ Projeto interdisciplinar
 
 # Objetivo do PI
 
-<p align="center">O PI (Projeto Integrador), projeto que deu início a elaboração do presente documento, está relacionado a atividade proposta no 2º semestre do curso de DSM (Desenvolvimento de Software Multiplataforma), com o intuito de estimular os estudantes, a aprimorar suas habilidades profissionais, principalmente com o trabalho em equipe.</p>
+<p align="justify">O PI (Projeto Integrador), projeto que deu início a elaboração do presente documento, está relacionado a atividade proposta no 2º semestre do curso de DSM (Desenvolvimento de Software Multiplataforma), com o intuito de estimular os estudantes, a aprimorar suas habilidades profissionais, principalmente com o trabalho em equipe.</p>
 <br>
 
 
-<div align="justify">
+<div align="center">
   <sub><strong>Equipe de desenvolvedores: </strong> <br>
     <a href="https://github.com/danielfransa">Daniel França</a> |
     <a href="https://github.com/douglashugo">Douglas Hugo</a> |
