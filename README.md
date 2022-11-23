@@ -7,6 +7,8 @@ Projeto interdisciplinar
 > <b>SWE</b> <br> Share Way Education
 
 <br>
+
+
 # Objetivo do PI
 
 <p align="center">O PI (Projeto Integrador), projeto que deu início a elaboração do presente documento, está relacionado a atividade proposta no 2º semestre do curso de DSM (Desenvolvimento de Software Multiplataforma), com o intuito de estimular os estudantes, a aprimorar suas habilidades profissionais, principalmente com o trabalho em equipe.</p>
