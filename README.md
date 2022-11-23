@@ -15,7 +15,7 @@ Projeto interdisciplinar
 <br>
 
 
-<div align="center">
+<div align="justify">
   <sub><strong>Equipe de desenvolvedores: </strong> <br>
     <a href="https://github.com/danielfransa">Daniel França</a> |
     <a href="https://github.com/douglashugo">Douglas Hugo</a> |
