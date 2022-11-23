@@ -107,7 +107,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
         </sub>
        </a>
        <br />
-       <a href="" title="Linkedin">@</a>
+       <a href="https://www.linkedin.com/in/régis-paulo-ferreira-89688a231" title="Linkedin">@regisferreira</a>
        <br />
     </td>
     <td align="center">
