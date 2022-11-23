@@ -1,29 +1,35 @@
 <?php
-    require_once('entidade/Usuario.php');
+require_once('entidade/Usuario.php');
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $usuario = new Usuario();
-        $result = $usuario->getUsuario($_POST['email']); 
-        $row = $result->fetch_assoc();
-        if(isset($row['email']) && isset($row['senha'])){             
-            if($_POST['senha'] == $row['senha']){ 
-                session_start(); 
-                $_SESSION['loggedin'] = TRUE; 
-                $_SESSION["usuario"] = $row["nome"];
-                $_SESSION["email"] = $row["email"];  
-                header("location: inicio.php"); 
-            } else {
-                $_SESSION['loggedin'] = FALSE; 
-            }
-        } else{
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usuario = new Usuario();
+    $result = $usuario->getUsuario($_POST['email']);
+    $row = $result->fetch_assoc();
+    if (isset($row['email']) && isset($row['senha'])) {
+        if ($_POST['senha'] == $row['senha']) {
+            session_start();
+            $_SESSION['loggedin'] = TRUE;
+            $_SESSION["usuario"] = $row["nome"];
+            $_SESSION["email"] = $row["email"];
+            header("location: inicio.php");
+        } else {
             echo '<div class="alert alert-danger fixed-top alert-dismissible fade show" role="alert">
+            Usuário ou senha inválida.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>';
+            $_SESSION['loggedin'] = FALSE;
+        }
+    } else {
+        echo '<div class="alert alert-danger fixed-top alert-dismissible fade show" role="alert">
                     Usuário ou senha inválida.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                   </div>';
-        }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -51,15 +57,15 @@
 
                         <h1 class="text-center mb-3 mt-5 title">SWE</h1>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <label for="usuario">Email</label>
-                                <input class="form-control" type="text" name="email" id="email"
-                                    placeholder="Seu email">
+                                <input class="form-control" type="text" name="email" id="email" placeholder="Seu email">
                             </div>
 
                             <div class="form-group">
                                 <label for="senha">Senha</label>
-                                <input class="form-control" type="password" name="senha" id="senha" placeholder="Sua senha">
+                                <input class="form-control" type="password" name="senha" id="senha"
+                                    placeholder="Sua senha">
                             </div>
 
                             <div class="d-flex justify-content-center">
@@ -75,17 +81,17 @@
                         </p>
                         <p class="text-center">
                             <!-- para rota interna '/sobre-nos' -->
-                            <a href="sobre-nos.html">Sobre Nós</a>
+                            <a href="sobre-nos.php">Sobre Nós</a>
                         </p>
                         <p class="text-center">
                             <!-- para rota interna '/sobre-nos' -->
-                            <a href="contato.html">Contato</a>
+                            <a href="contato.php">Contato</a>
                         </p>
                     </div>
                 </div>
 
             </div>
-            <img class="col-md-6 img-fluid" src="./image/ideia.png" alt="" >
+            <img class="col-md-6 img-fluid" src="./image/ideia.png" alt="">
         </div>
     </div>
 

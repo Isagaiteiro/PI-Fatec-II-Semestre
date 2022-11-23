@@ -1,6 +1,7 @@
 <?php
 
-class Database{
+class Database
+{
 
   const SERVERNAME = '127.0.0.1';
   const DBNAME = 'swe';
@@ -11,23 +12,26 @@ class Database{
 
   private $connection;
 
-  public function __construct($table = null){
+  public function __construct($table = null)
+  {
     $this->table = $table;
     $this->setConnection();
   }
 
-  private function setConnection(){
+  private function setConnection()
+  {
     $this->connection = new mysqli(self::SERVERNAME, self::USERNAME, self::PASS, self::DBNAME);
     if ($this->connection->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
+      die("Connection failed: " . $this->connection->connect_error);
     }
   }
 
-  public function insert($values){
+  public function insert($values)
+  {
     $fields = array_keys($values);
-    $binds  = array_pad($values, count($fields),'?');
+    $binds = array_pad($values, count($fields), '?');
 
-    $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
+    $query = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
     if ($this->connection->query($query) === TRUE) {
       return true;
     } else {
@@ -36,35 +40,49 @@ class Database{
     $this->connection->close();
   }
 
-  public function select($where = null, $order = null, $limit = null, $fields = '*'){
-    $where = strlen($where) ? 'WHERE '.$where : '';
-    $order = strlen($order) ? 'ORDER BY '.$order : '';
-    $limit = strlen($limit) ? 'LIMIT '.$limit : '';
+  public function select($where = null, $order = null, $limit = null, $fields = '*')
+  {
+    $where = strlen($where) ? 'WHERE ' . $where : '';
+    $order = strlen($order) ? 'ORDER BY ' . $order : '';
+    $limit = strlen($limit) ? 'LIMIT ' . $limit : '';
 
-    $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit;
+    $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;
 
     $result = $this->connection->query($query);
     $this->connection->close();
     return $result;
   }
 
-  public function update($where,$values){
-    $s = implode(', ', array_map(
-                          function($k, $v) {
-                              return $k . ' = ' . $v;
-                          },
-                          array_keys($values),
-                          array_values($values)
-                        )
-                      );
-    $query = 'UPDATE '.$this->table.' SET '. $s .' WHERE '. $where;
-    
-    echo $query;
+  public function update($where, $values)
+  {
+    $s = implode(
+      ', ',
+      array_map(
+        function ($k, $v) {
+          return $k . ' = ' . $v;
+        },
+        array_keys($values),
+        array_values($values)
+      )
+    );
+    $query = 'UPDATE ' . $this->table . ' SET ' . $s . ' WHERE ' . $where;
+
     if ($this->connection->query($query) === TRUE) {
       return true;
     } else {
       return false;
     }
     $this->connection->close();
+  }
+
+  public function delete($where)
+  {
+    $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $where;
+    
+    if ($this->connection->query($query) === TRUE) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
