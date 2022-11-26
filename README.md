@@ -45,6 +45,14 @@ Projeto interdisciplinar
 
 Este projeto foi feito utilizando as seguintes tecnologias:
 
+<div>  
+<img height="50em" align="center" style="padding:15px;"src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/php/php-original.svg"/>
+<img height="50em" align="center" style="padding:15px;" src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/mysql/mysql-original-wordmark.svg"/>
+<img height="50em" align="center" style="padding:15px;"src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/vscode/vscode-original.svg"/>
+<img height="50em" align="center" style="padding:15px;" src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/git/git-original.svg"/>
+<img height="50em" align="center" style="padding:15px;" src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/github/github-original.svg"/>
+</div>  
+
 
 # :computer: Autores
 
