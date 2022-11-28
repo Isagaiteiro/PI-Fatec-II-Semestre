@@ -157,7 +157,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
 
 <br>
 
-## Intituição
+## Instituição
 - Faculdade de Tecnologia do Centro Paula Souza - Fatec Araras<br/>
 https://fatecararas.cps.sp.gov.br/
 
