@@ -1,5 +1,3 @@
-# PI-Fatec-II-Semestre
-
 # Readme
 Projeto interdisciplinar
 
