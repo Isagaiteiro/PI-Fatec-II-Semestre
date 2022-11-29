@@ -48,6 +48,7 @@ class Database
 
     $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;
 
+   
     $result = $this->connection->query($query);
     $this->connection->close();
     return $result;

@@ -1,7 +1,11 @@
-.nav-height{
-    min-height: 72px;
+.nav-height {
+  min-height: 72px;
 }
 
-.header-height{
-    min-height: 35vw;
+.header-height {
+  min-height: 35vw;
+}
+
+.margin-bottom {
+  margin-bottom: 50px;
 }

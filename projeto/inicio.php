@@ -1,4 +1,7 @@
 <?php
+require_once('entidade/Usuario.php');
+require_once('entidade/Postagem.php');
+
 session_start();
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -6,20 +9,36 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
-require_once('entidade/Usuario.php');
-
 $usuario = new Usuario();
 $result = $usuario->getUsuario(htmlspecialchars($_SESSION["email"]));
 $row = $result->fetch_assoc();
 
+$postagem = new Postagem();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     if (
-        isset($_POST['$tema']) && $_POST['tema'] != ""
+        isset($_POST['tema']) && $_POST['tema'] != ""
         && isset($_POST['url']) && $_POST['url'] != ""
         && isset($_POST['conteudo']) && $_POST['conteudo'] != ""
+        && isset($_POST['tipo']) && $_POST['tipo'] != ""
+        && isset($_POST['titulo']) && $_POST['titulo'] != ""
     ) {
+        $data = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
 
-        require_once('entidade/Postagem.php');
+        $postagem->titulo = $_POST['titulo'];
+        $postagem->tema = $_POST['tema'];
+        $postagem->url = $_POST['url'];
+        $postagem->conteudo = $_POST['conteudo'];
+        $postagem->data = $data->format('Y-m-d H:i:s');
+        $postagem->tipo = $_POST['tipo'];
+        $postagem->idUsuario = $row['id'];
+
+        if ($postagem->Cadastrar()) {
+            echo "Cadastrou";
+        } else {
+            echo "Não Cadastrou";
+        }
 
     }
 }
@@ -33,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="css/inicio.css">
+    <link rel="stylesheet" href="./css/inicio.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -130,51 +149,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </nav>
 
-        <!-- <h2 class="text-center text-secondary mt-5">
-            Não existem postagens ainda...
-        </h2>-->
-
         <div class="tab-content mt-5" id="nav-tabContent">
             <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel"
                 aria-labelledby="nav-todasPostagens-tab">
+                <?php
+                $posts = $postagem->getAll();
+                while ($po = $posts->fetch_assoc()):
 
-                <div class="card">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title m-0">titulo</h5>
-                            <small class="text-muted"> Tema: JavaScript</small>
-                            <p class="card-text mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-                                consequatur nobis earum officiis. Illo sapiente, voluptates quae modi facilis
-                                distinctio, voluptatum repellat reiciendis a pariatur possimus adipisci. Unde, debitis
-                                alias?</p>
-                            <a href="">Link de alguma coisa</a>
-                            <p class="card-text"><small class="text-muted">24/10/2022 às 21:35</small></p>
-                            <p class="card-text"><small class="text-muted">by: Witer Mendonça</small></p>
+                    $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
+                    echo "
+                <div class='card mb-5'>
+                    <div class='card text-center'>
+                        <div class='card-body'>
+                            <h5 class='card-title m-0'>$po[titulo]</h5>
+                            <small class='text-muted'> Tema: $po[tema]</small>
+                            <p class='card-text mt-3'>$po[conteudo]</p>
+                            <a href='$po[url]' target='_blank'>Click aqui</a>
+                            <p class='card-text'><small class='text-muted'>$fordate</small></p>
+                            <p class='card-text'><small class='text-muted'>by: $po[nome]</small></p>
                         </div>
                     </div>
-                </div>
-
+                </div>";
+                endwhile; ?>
             </div>
 
             <div class="tab-pane fade" id="minhasPostagens" role="tabpanel" aria-labelledby="nav-minhasPostagens-tab">
-                <div class="card">
-                    <div class="card text-center" *ngFor='let item of usuario.postagem | orderBy : key : reverse'>
-                        <div class="card-body">
-                            <h5 class="card-title m-0">titulo</h5>
-                            <small class="text-muted"> Tema: descricao</small>
-                            <p class="card-text mt-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia
-                                fugiat aliquid libero laudantium atque voluptatem ipsa. Ex, quibusdam, distinctio unde
-                                necessitatibus soluta asperiores eos iusto obcaecati repellat natus, ipsum esse.</p>
-                            <p class="card-text"><small class="text-muted">24/10/2022 às 21:35</small></p>
+                <?php
+                $posts = $postagem->getPostagemByUser($row['id']);
+                while ($po = $posts->fetch_assoc()):
 
-                            <a class="text-info mr-3" href="">Editar</a>
-                            <a class="text-danger" href="">Apagar</a>
+                    $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
+                    echo "
+                <div class='card mb-5'>
+                    <div class='card text-center'>
+                        <div class='card-body'>
+                            <h5 class='card-title m-0'>$po[titulo]</h5>
+                            <small class='text-muted'> Tema: $po[tema]</small>
+                            <p class='card-text mt-3'>$po[conteudo]</p>
+                            <a href='$po[url]' target='_blank'>Click aqui</a>
+                            <p class='card-text'><small class='text-muted'>$fordate</small></p>
+                            <a class='text-info mr-3' href=''>Editar</a>
+                            <a class='text-danger' href=''>Apagar</a>
                         </div>
                     </div>
-                </div>
+                </div>";
+                endwhile; ?>
             </div>
 
             <div class="tab-pane fade" id="postagemTema" role="tabpanel" aria-labelledby="nav-postagemTema-tab">
+
                 <div class="row d-flex justify-content-center mt-5 mb-5">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -183,25 +206,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                 </div>
+                <?php
+                $posts = $postagem->getByTemaTipo('tema', 'J');
+                while ($po = $posts->fetch_assoc()):
 
-                <div class="card">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title m-0">titulo</h5>
-                            <small class="text-muted"> Tema: JavaScript</small>
-                            <p class="card-text mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-                                consequatur nobis earum officiis. Illo sapiente, voluptates quae modi facilis
-                                distinctio, voluptatum repellat reiciendis a pariatur possimus adipisci. Unde, debitis
-                                alias?</p>
-                            <a href="">Link de alguma coisa</a>
-                            <p class="card-text"><small class="text-muted">24/10/2022 às 21:35</small></p>
-                            <p class="card-text"><small class="text-muted">by: Witer Mendonça</small></p>
+                    $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
+                    echo "
+                <div class='card mb-5'>
+                    <div class='card text-center'>
+                        <div class='card-body'>
+                            <h5 class='card-title m-0'>$po[titulo]</h5>
+                            <small class='text-muted'> Tema: $po[tema]</small>
+                            <p class='card-text mt-3'>$po[conteudo]</p>
+                            <a href='$po[url]' target='_blank'>Click aqui</a>
+                            <p class='card-text'><small class='text-muted'>$fordate</small></p>
+                            <p class='card-text'><small class='text-muted'>by: $po[nome]</small></p>
                         </div>
                     </div>
-                </div>
+                </div>";
+                endwhile; ?>
             </div>
 
             <div class="tab-pane fade" id="postagemTipo" role="tabpanel" aria-labelledby="nav-postagemTipo-tab">
+    
                 <div class="row d-flex justify-content-center mt-5 mb-5">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -211,21 +238,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title m-0">titulo</h5>
-                            <small class="text-muted"> Tema: JavaScript</small>
-                            <p class="card-text mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-                                consequatur nobis earum officiis. Illo sapiente, voluptates quae modi facilis
-                                distinctio, voluptatum repellat reiciendis a pariatur possimus adipisci. Unde, debitis
-                                alias?</p>
-                            <a href="">Link de alguma coisa</a>
-                            <p class="card-text"><small class="text-muted">24/10/2022 às 21:35</small></p>
-                            <p class="card-text"><small class="text-muted">by: Witer Mendonça</small></p>
+                <?php
+                $posts = $postagem->getByTemaTipo('tipo', 'Video');
+                while ($po = $posts->fetch_assoc()):
+
+                    $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
+                    echo "
+                <div class='card mb-5'>
+                    <div class='card text-center'>
+                        <div class='card-body'>
+                            <h5 class='card-title m-0'>$po[titulo]</h5>
+                            <small class='text-muted'> Tema: $po[tema]</small>
+                            <p class='card-text mt-3'>$po[conteudo]</p>
+                            <a href='$po[url]' target='_blank'>Click aqui</a>
+                            <p class='card-text'><small class='text-muted'>$fordate</small></p>
+                            <p class='card-text'><small class='text-muted'>by: $po[nome]</small></p>
                         </div>
                     </div>
-                </div>
+                </div>";
+                endwhile; ?>
             </div>
         </div>
     </div>
@@ -243,25 +274,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <form <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="post">
                     <div class="modal-body">
-
                         <div class="form-group">
                             <label for="titulo">Título</label>
-                            <input type="text" class="form-control" id="titulo" placeholder="Digite o título">
+                            <input type="text" class="form-control" name="titulo" id="titulo"
+                                placeholder="Digite o título">
                         </div>
 
                         <div class="form-group">
                             <label for="titulo">Link</label>
-                            <input type="text" class="form-control" id="link" placeholder="Digite o link">
+                            <input type="text" class="form-control" name="url" id="link" placeholder="Digite o link">
                         </div>
 
                         <div class="form-group">
                             <label for="titulo">Tema</label>
-                            <input type="text" class="form-control" id="tema" placeholder="Digite o tema">
+                            <input type="text" class="form-control" name="tema" id="tema" placeholder="Digite o tema">
                         </div>
 
                         <div class="form-group">
                             <label for="texto">Texto</label>
-                            <textarea class="form-control" name="texto" id="texto" rows="3"></textarea>
+                            <textarea class="form-control" name="conteudo" id="texto" rows="3"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -274,12 +305,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option>Site</option>
                             </select>
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success" data-dismiss="modal">Publicar</button>
+                        <button type="submit" class="btn btn-success">Publicar</button>
                     </div>
                 </form>
             </div>
