@@ -148,7 +148,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
   <br>
   
   
-# Agradecimento 
+# Agradecimentos 
 
 # :closed_book: Professores
 - Jonas Bodê -  Engenharia de Software II <br/>
@@ -157,7 +157,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
 
 <br>
 
-## Intituição
+## Instituição
 - Faculdade de Tecnologia do Centro Paula Souza - Fatec Araras<br/>
 https://fatecararas.cps.sp.gov.br/
 
