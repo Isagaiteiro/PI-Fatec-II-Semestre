@@ -1,9 +1,12 @@
 <?php
 require_once './data-base/Database.php';
 
-class Postagem{
+class Postagem
+{
 
     public $id;
+
+    public $titulo;
 
     public $tema;
 
@@ -13,28 +16,40 @@ class Postagem{
 
     public $data;
 
-    public $idTipo;
+    public $tipo;
+
+    public $curtir;
 
     public $idUsuario;
 
-    public function Cadastrar() {
-        $db = new Database('usuario');
+    public function Cadastrar()
+    {
+        $db = new Database('postagem');
         return $db->insert([
-                            'tema'=> "'$this->tema'",
-                            'url'=> "'$this->url'",
-                            'conteudo'=> "'$this->conteudo'",
-                            'postdate'  => "'$this->data'",
-                            'id_tipo'  => "'$this->idTipo'",
-                            'id_usuario'  => "'$this->idUsuario'",
-                        ]);
-    }
-        
-    public function getPostagemByUser($idUser){
-        return (new Database('postagem'))->select("id_usuario = '$idUser'");
+            'titulo' => "'$this->titulo'",
+            'tema' => "'$this->tema'",
+            'url' => "'$this->url'",
+            'conteudo' => "'$this->conteudo'",
+            'postdate' => "'$this->data'",
+            'tipo' => "'$this->tipo'",
+            'curtir' => "'$this->curtir'",
+            'id_usuario' => "'$this->idUsuario'",
+        ]);
     }
 
-    public function getAll(){
-        return (new Database('postagem'))->select();
+    public function getPostagemByUser($idUser)
+    {
+        return (new Database('postagem'))->select("id_usuario = '$idUser'", 'postdate desc');
+    }
+
+    public function getAll()
+    {
+        return (new Database('visao_geral'))->select(null,'postdate desc');
+    }
+
+    public function getByTemaTipo($tt, $t)
+    {
+        return (new Database('visao_geral'))->select("$tt LIKE '$t%'",'postdate desc');
     }
 }
 ?>

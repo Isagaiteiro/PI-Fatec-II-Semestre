@@ -1,5 +1,3 @@
-# PI-Fatec-II-Semestre
-
 # Readme
 Projeto interdisciplinar
 
@@ -148,7 +146,9 @@ Este projeto foi feito utilizando as seguintes tecnologias:
   </tr>
   </table>
   <br>
-  # Agradecimento 
+  
+  
+# Agradecimentos 
 
 # :closed_book: Professores
 - Jonas Bodê -  Engenharia de Software II <br/>
