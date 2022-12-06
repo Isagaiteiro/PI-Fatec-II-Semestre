@@ -21,7 +21,7 @@ class Postagem
     public $curtir;
 
     public $idUsuario;
-
+   
     public function Cadastrar()
     {
         $db = new Database('postagem');
@@ -42,6 +42,11 @@ class Postagem
         return (new Database('postagem'))->select("id_usuario = '$idUser'", 'postdate desc');
     }
 
+    public function getPostagemById($idPost, $idUse)
+    {
+        return (new Database('postagem'))->select("idpostagem = '$idPost' AND id_usuario = $idUse");
+    }
+
     public function getAll()
     {
         return (new Database('visao_geral'))->select(null,'postdate desc');
@@ -50,6 +55,21 @@ class Postagem
     public function getByTemaTipo($tt, $t)
     {
         return (new Database('visao_geral'))->select("$tt LIKE '$t%'",'postdate desc');
+    }
+
+    public function Update()
+    {
+        return (new Database('postagem'))->update("idpostagem = $this->id", [
+            'titulo' => "'$this->titulo'",
+            'tema' => "'$this->tema'",
+            'url' => "'$this->url'",
+            'conteudo' => "'$this->conteudo'",
+            'tipo' => "'$this->tipo'"
+        ]);
+    }
+    public function Excluir($idP, $idU)
+    {
+        return (new Database('postagem'))->delete("idpostagem = '$idP' AND id_usuario = '$idU'");
     }
 }
 ?>

@@ -14,33 +14,43 @@ $result = $usuario->getUsuario(htmlspecialchars($_SESSION["email"]));
 $row = $result->fetch_assoc();
 
 $postagem = new Postagem();
+$postTema = null;
+
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["btnPublicar"])) {
+        if (
+            isset($_POST['tema']) && $_POST['tema'] != ""
+            && isset($_POST['url']) && $_POST['url'] != ""
+            && isset($_POST['conteudo']) && $_POST['conteudo'] != ""
+            && isset($_POST['tipo']) && $_POST['tipo'] != ""
+            && isset($_POST['titulo']) && $_POST['titulo'] != ""
+        ) {
+            $data = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
 
-    if (
-        isset($_POST['tema']) && $_POST['tema'] != ""
-        && isset($_POST['url']) && $_POST['url'] != ""
-        && isset($_POST['conteudo']) && $_POST['conteudo'] != ""
-        && isset($_POST['tipo']) && $_POST['tipo'] != ""
-        && isset($_POST['titulo']) && $_POST['titulo'] != ""
-    ) {
-        $data = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
+            $postagem->titulo = $_POST['titulo'];
+            $postagem->tema = $_POST['tema'];
+            $postagem->url = $_POST['url'];
+            $postagem->conteudo = $_POST['conteudo'];
+            $postagem->data = $data->format('Y-m-d H:i:s');
+            $postagem->tipo = $_POST['tipo'];
+            $postagem->idUsuario = $row['id'];
 
-        $postagem->titulo = $_POST['titulo'];
-        $postagem->tema = $_POST['tema'];
-        $postagem->url = $_POST['url'];
-        $postagem->conteudo = $_POST['conteudo'];
-        $postagem->data = $data->format('Y-m-d H:i:s');
-        $postagem->tipo = $_POST['tipo'];
-        $postagem->idUsuario = $row['id'];
+            if ($postagem->Cadastrar()) {
+                header("location: #AA");
+            } else {
+                echo '<div class="alert alert-danger fixed-top alert-dismissible fade show" role="alert">
+                Erro: postagem não cadastrada.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+            }
 
-        if ($postagem->Cadastrar()) {
-            echo "Cadastrou";
-        } else {
-            echo "Não Cadastrou";
         }
-
     }
+
 }
 ?>
 
@@ -61,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+
     <!--Navibar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top nav-height">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
@@ -123,6 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-md-6 d-flex justify-content-center">
                 <img class="img-fluid" src="image/educacao.png" alt="">
             </div>
+            <div id="AA"></div>
         </div>
     </div>
 
@@ -138,14 +150,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     data-toggle="tab" href="#minhasPostagens" role="tab" aria-controls="nav-minhasPostagens"
                     aria-selected="false">Minhas
                     Postagens</a>
-
-                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTema-tab" data-toggle="tab"
-                    href="#postagemTema" role="tab" aria-controls="nav-postagemTema" aria-selected="false">Postagens por
-                    tema</a>
-
-                <a class="nav-item nav-link text-secondary font-weight-bold" id="nav-postagemTipo-tab" data-toggle="tab"
-                    href="#postagemTipo" role="tab" aria-controls="nav-postagemTipo" aria-selected="false">Postagens por
-                    tipo</a>
             </div>
         </nav>
 
@@ -153,24 +157,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel"
                 aria-labelledby="nav-todasPostagens-tab">
                 <?php
-                $posts = $postagem->getAll();
-                while ($po = $posts->fetch_assoc()):
+                $postTema = $postagem->getAll();
+                if ($postTema) {
+                    while ($po = $postTema->fetch_assoc()):
+                        $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
+                        echo "
+                            <div class='card mb-5'>
+                                <div class='card text-center'>
+                                    <div class='card-body'>
+                                        <h5 class='card-title m-0'>$po[titulo]</h5>
+                                        <small class='text-muted'> Tema: $po[tema]</small>
+                                        <p class='card-text mt-3'>$po[conteudo]</p>
+                                        <a href='$po[url]' target='_blank'>Click aqui</a>
+                                        <p class='card-text'><small class='text-muted'>$fordate</small></p>
+                                        <p class='card-text'><small class='text-muted'>by: $po[nome]</small></p>
+                                    </div>
+                                </div>
+                            </div>";
+                    endwhile;
+                }
 
-                    $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
-                    echo "
-                <div class='card mb-5'>
-                    <div class='card text-center'>
-                        <div class='card-body'>
-                            <h5 class='card-title m-0'>$po[titulo]</h5>
-                            <small class='text-muted'> Tema: $po[tema]</small>
-                            <p class='card-text mt-3'>$po[conteudo]</p>
-                            <a href='$po[url]' target='_blank'>Click aqui</a>
-                            <p class='card-text'><small class='text-muted'>$fordate</small></p>
-                            <p class='card-text'><small class='text-muted'>by: $po[nome]</small></p>
-                        </div>
-                    </div>
-                </div>";
-                endwhile; ?>
+                ?>
             </div>
 
             <div class="tab-pane fade" id="minhasPostagens" role="tabpanel" aria-labelledby="nav-minhasPostagens-tab">
@@ -188,71 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <p class='card-text mt-3'>$po[conteudo]</p>
                             <a href='$po[url]' target='_blank'>Click aqui</a>
                             <p class='card-text'><small class='text-muted'>$fordate</small></p>
-                            <a class='text-info mr-3' href=''>Editar</a>
-                            <a class='text-danger' href=''>Apagar</a>
-                        </div>
-                    </div>
-                </div>";
-                endwhile; ?>
-            </div>
-
-            <div class="tab-pane fade" id="postagemTema" role="tabpanel" aria-labelledby="nav-postagemTema-tab">
-
-                <div class="row d-flex justify-content-center mt-5 mb-5">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="titulo"
-                                placeholder="Digite um tema para pesquisar">
-                        </div>
-                    </div>
-                </div>
-                <?php
-                $posts = $postagem->getByTemaTipo('tema', 'J');
-                while ($po = $posts->fetch_assoc()):
-
-                    $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
-                    echo "
-                <div class='card mb-5'>
-                    <div class='card text-center'>
-                        <div class='card-body'>
-                            <h5 class='card-title m-0'>$po[titulo]</h5>
-                            <small class='text-muted'> Tema: $po[tema]</small>
-                            <p class='card-text mt-3'>$po[conteudo]</p>
-                            <a href='$po[url]' target='_blank'>Click aqui</a>
-                            <p class='card-text'><small class='text-muted'>$fordate</small></p>
-                            <p class='card-text'><small class='text-muted'>by: $po[nome]</small></p>
-                        </div>
-                    </div>
-                </div>";
-                endwhile; ?>
-            </div>
-
-            <div class="tab-pane fade" id="postagemTipo" role="tabpanel" aria-labelledby="nav-postagemTipo-tab">
-    
-                <div class="row d-flex justify-content-center mt-5 mb-5">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="titulo"
-                                placeholder="Digite um tipo para pesquisar">
-                        </div>
-                    </div>
-                </div>
-
-                <?php
-                $posts = $postagem->getByTemaTipo('tipo', 'Video');
-                while ($po = $posts->fetch_assoc()):
-
-                    $fordate = date('d/m/Y \à\s H:i', strtotime($po['postdate']));
-                    echo "
-                <div class='card mb-5'>
-                    <div class='card text-center'>
-                        <div class='card-body'>
-                            <h5 class='card-title m-0'>$po[titulo]</h5>
-                            <small class='text-muted'> Tema: $po[tema]</small>
-                            <p class='card-text mt-3'>$po[conteudo]</p>
-                            <a href='$po[url]' target='_blank'>Click aqui</a>
-                            <p class='card-text'><small class='text-muted'>$fordate</small></p>
-                            <p class='card-text'><small class='text-muted'>by: $po[nome]</small></p>
+                            <a class='text-danger mr-3' href='edite-postagem.php?id=$po[idpostagem]'>Editar/Apagar</a>
                         </div>
                     </div>
                 </div>";
@@ -308,7 +251,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Publicar</button>
+                        <button type="submit" name="btnPublicar" class="btn btn-success">Publicar</button>
                     </div>
                 </form>
             </div>
@@ -326,8 +269,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </footer>
 
 
-    <!-- JavaScript (Opcional) -->
-    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
         </script>
