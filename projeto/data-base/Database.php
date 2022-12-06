@@ -32,12 +32,16 @@ class Database
     $binds = array_pad($values, count($fields), '?');
 
     $query = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
-    if ($this->connection->query($query) === TRUE) {
+
+    $respInsert = $this->connection->query($query);
+    $this->connection->close();
+
+    if ($respInsert === TRUE) {
       return true;
     } else {
       return false;
     }
-    $this->connection->close();
+
   }
 
   public function select($where = null, $order = null, $limit = null, $fields = '*')
@@ -48,7 +52,7 @@ class Database
 
     $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;
 
-   
+    // echo $query;
     $result = $this->connection->query($query);
     $this->connection->close();
     return $result;
@@ -67,20 +71,24 @@ class Database
       )
     );
     $query = 'UPDATE ' . $this->table . ' SET ' . $s . ' WHERE ' . $where;
-
-    if ($this->connection->query($query) === TRUE) {
+    // echo $query;
+    $respUpdate = $this->connection->query($query);
+    $this->connection->close();
+    if ($respUpdate === TRUE) {
       return true;
     } else {
       return false;
     }
-    $this->connection->close();
+
   }
 
   public function delete($where)
   {
     $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $where;
-    
-    if ($this->connection->query($query) === TRUE) {
+    // echo $query;
+    $respDelete = $this->connection->query($query);
+    $this->connection->close();
+    if ($respDelete === TRUE) {
       return true;
     } else {
       return false;
