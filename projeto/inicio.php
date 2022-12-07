@@ -16,9 +16,11 @@ $row = $result->fetch_assoc();
 $postagem = new Postagem();
 $postTema = null;
 
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if($_POST["btnBuscar"]){
+       header("location: #AA");
+    }
+        
     if (isset($_POST["btnPublicar"])) {
         if (
             isset($_POST['tema']) && $_POST['tema'] != ""
@@ -55,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -142,7 +144,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mb-5 mt-5" id="postagens">
         <nav>
             <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active text-secondary font-weight-bold" id="nav-todasPostagens-tab"
+                <a class="nav-item active nav-link text-secondary font-weight-bold" id="nav-porTema-tab"
+                    data-toggle="tab" href="#porTema" role="tab" aria-controls="nav-porTema" aria-selected="false">Por
+                    Tema</a>
+                <a class="nav-item nav-link  text-secondary font-weight-bold" id="nav-todasPostagens-tab"
                     data-toggle="tab" href="#todasPostagens" role="tab" aria-controls="nav-todasPostagens"
                     aria-selected="true">Todas as Postagens</a>
 
@@ -150,12 +155,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     data-toggle="tab" href="#minhasPostagens" role="tab" aria-controls="nav-minhasPostagens"
                     aria-selected="false">Minhas
                     Postagens</a>
+
             </div>
         </nav>
 
         <div class="tab-content mt-5" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel"
-                aria-labelledby="nav-todasPostagens-tab">
+            <div class="tab-pane fade" id="todasPostagens" role="tabpanel" aria-labelledby="nav-todasPostagens-tab">
                 <?php
                 $postTema = $postagem->getAll();
                 if ($postTema) {
@@ -200,6 +205,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>";
                 endwhile; ?>
+            </div>
+
+            <div class="tab-pane fade show active" id="porTema" role="tabpanel" aria-labelledby="nav-porTema-tab">
+                <form <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="post">
+                    <div class="row row d-flex justify-content-center mt-5 mb-5">
+                        <div class="form-group">
+                            <select name="temaTipo" id="temaTipo" class="form-control">
+                                <option value="tema" selected>tema</option>
+                                <option value="tipo">tipo</option>
+                            </select>
+                        </div>
+                        <div class=" col-4 form-group">
+                            <input type="text" class="form-control" name="busca" id="busca">
+                        </div class="form-group">
+                        <div>
+                            <button type="submit" name="btnBuscar" class="btn btn-success">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+                <?php
+                $postsT = $postagem->getByTemaTipo((!empty($_POST['temaTipo'])) ? $_POST['temaTipo'] : '', (!empty($_POST['busca'])) ? $_POST['busca'] : '');
+                if ($postsT) {
+                    
+                    while ($pot = $postsT->fetch_assoc()):
+                        $fordate = date('d/m/Y \à\s H:i', strtotime($pot['postdate']));
+                        echo "
+                            <div class='card mb-5'>
+                                <div class='card text-center'>
+                                    <div class='card-body'>
+                                        <h5 class='card-title m-0'>$pot[titulo]</h5>
+                                        <small class='text-muted'> Tema: $pot[tema]</small>
+                                        <p class='card-text mt-3'>$pot[conteudo]</p>
+                                        <a href='$pot[url]' target='_blank'>Click aqui</a>
+                                        <p class='card-text'><small class='text-muted'>$fordate</small></p>
+                                        <p class='card-text'><small class='text-muted'>by: $pot[nome]</small></p>
+                                    </div>
+                                </div>
+                            </div>";
+                    endwhile;
+                }
+                ?>
             </div>
         </div>
     </div>
